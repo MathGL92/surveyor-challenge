@@ -1,5 +1,7 @@
 module Surveyor
   class RatingQuestion < Question
-    # your code goes here
+    def valid_answer?(answer)
+      answer.class == Integer && (1..5).cover?(answer)
+    end
   end
 end
