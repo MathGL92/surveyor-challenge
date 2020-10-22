@@ -23,7 +23,6 @@ RSpec.describe Surveyor::Survey do
   let(:answer_7) { Surveyor::Answer.new(question: question_2, value: "Party") }
   let(:answer_8) { Surveyor::Answer.new(question: question_2, value: "Travel") }
 
-
   before(:each) do
     subject.add_response(response_1)
     subject.add_response(response_2)
@@ -109,6 +108,20 @@ RSpec.describe Surveyor::Survey do
 
     it "counts the high answers on a survey for a given question" do
       expect(subject.count_high_answers(question_1)).to eq(2)
+    end
+  end
+
+  context "should be able to give us a breakdown of the answers for a particular rating question" do
+    it "#answer_breakdown(question)" do
+      result = {
+        "1" => 2,
+        "2" => 1,
+        "3" => 1,
+        "4" => 1,
+        "5" => 1,
+      }
+
+      expect(subject.answer_breakdown(question_1)).to eq(result)
     end
   end
 end
