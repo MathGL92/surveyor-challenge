@@ -11,17 +11,17 @@ RSpec.describe Surveyor::Survey do
   let(:response_5) { Surveyor::Response.new(email: "user5@user.com") }
   let(:response_6) { Surveyor::Response.new(email: "user6@user.com") }
 
-  let(:question_1) { Surveyor::Question.new(title: "How much do you miss going out?") }
-  let(:question_2) { Surveyor::Question.new(title: "What will you do first when the restrictions are over?") }
+  let(:question_1) { Surveyor::RatingQuestion.new(title: "How much do you miss going out?") }
+  let(:question_2) { Surveyor::FreeTextQuestion.new(title: "What will you do first when the restrictions are over?") }
 
-  let(:answer_1) { Surveyor::Answer.new(question: question_1, value: 2) }
-  let(:answer_2) { Surveyor::Answer.new(question: question_1, value: 1) }
-  let(:answer_3) { Surveyor::Answer.new(question: question_1, value: 1) }
-  let(:answer_4) { Surveyor::Answer.new(question: question_1, value: 3) }
-  let(:answer_5) { Surveyor::Answer.new(question: question_1, value: 5) }
-  let(:answer_6) { Surveyor::Answer.new(question: question_1, value: 4) }
-  let(:answer_7) { Surveyor::Answer.new(question: question_2, value: "Party") }
-  let(:answer_8) { Surveyor::Answer.new(question: question_2, value: "Travel") }
+  let(:answer_1) { Surveyor::Answer.new(question_1, 2) }
+  let(:answer_2) { Surveyor::Answer.new(question_1, 1) }
+  let(:answer_3) { Surveyor::Answer.new(question_1, 1) }
+  let(:answer_4) { Surveyor::Answer.new(question_1, 3) }
+  let(:answer_5) { Surveyor::Answer.new(question_1, 5) }
+  let(:answer_6) { Surveyor::Answer.new(question_1, 4) }
+  let(:answer_7) { Surveyor::Answer.new(question_2, "Party") }
+  let(:answer_8) { Surveyor::Answer.new(question_2, "Travel") }
 
   before(:each) do
     subject.add_response(response_1)

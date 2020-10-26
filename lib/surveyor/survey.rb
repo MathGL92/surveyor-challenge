@@ -29,34 +29,36 @@ module Surveyor
     end
 
     def count_low_answers(question)
-      # select if values of the question <= 2 and return size of array
-      get_answers_to_question(question).select { |answer| answer.value <= 2 }.size
+      # count ratings of the question <= 2
+      get_question_ratings(question).count { |rating| rating <= 2 }
     end
 
     def count_neutral_answers(question)
-      # select if values of the question == 3 and return size of array
-      get_answers_to_question(question).select { |answer| answer.value == 3 }.size
+      # count ratings of the question == 3
+      get_question_ratings(question).count { |rating| rating == 3 }
     end
 
     def count_high_answers(question)
-      # select if values of the question > 3 and return size of array
-      get_answers_to_question(question).select { |answer| answer.value > 3 }.size
+      # count ratings of the question > 3
+      get_question_ratings(question).count { |rating| rating > 3 }
     end
 
     def answer_breakdown(question)
-      # get the values of answer in array
-      values_answers = get_answers_to_question(question).map { |answer| answer.value.to_s }.sort
       # count the number of times the value appears in hash
-      values_answers.each_with_object(Hash.new(0)) { |value, new_hash| new_hash[value] += 1 }
+      get_question_ratings(question).map(&:to_s).each_with_object(Hash.new(0)) { |value, new_hash| new_hash[value] += 1 }
     end
 
     private
 
-    def get_answers_to_question(question)
+    def get_question_ratings(question)
       # return array of all answers from survey
-      answers = @responses.map(&:answers).flatten
+      # answers = @responses.flat_map(&:answers)
       # select only answers with answer.question == question
-      answers.select { |answer| answer.question == question }
+      # answers_filtered = answers.select { |answer| answer.question == question }
+      # get the values of answers
+      # answers_filtered.map(&:value)
+      @responses
+        .flat_map { |response| response.answer_value_for(question) }
     end
   end
 end
